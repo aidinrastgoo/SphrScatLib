@@ -1,5 +1,8 @@
 module SphrScatLib
 
-greet() = print("Hello World!")
+import Pkg
+include("compute_η.jl")
+
+export calculate_η
 
 end # module SphrScatLib
