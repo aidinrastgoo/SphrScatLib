@@ -1,6 +1,6 @@
 using Revise
 using Test
-using .SphrScatLib
+using SphrScatLib
 
 @testset "SphrScatLib" begin
     
