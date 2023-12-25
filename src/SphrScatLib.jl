@@ -1,5 +1,4 @@
 module SphrScatLib
-
 import Pkg
 include("compute_η.jl")
 include("compute_U.jl")
