@@ -4,6 +4,7 @@ using SphrScatLib
 
 @testset "SphrScatLib" begin
     
-    include("test.jl")
+    include("compare_Sphr.jl")
+   # include("compare_Sphr_Core.jl")
 
 end
