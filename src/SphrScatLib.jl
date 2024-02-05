@@ -1,5 +1,6 @@
 module SphrScatLib
 import Pkg
+using LinearAlgebra
 include("compute_η.jl")
 include("compute_U.jl")
 include("compute_coefficient_lower_hemisphere.jl")
@@ -18,4 +19,7 @@ export calculate_HH_A1
 export compute_E_PEC
 export calculate_BSphere
 export calculate_ASph_with_Core
+export calculate_ESph_with_Core
 end # module SphrScatLib
+
+
