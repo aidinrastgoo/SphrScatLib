@@ -1,4 +1,4 @@
-using LinearAlgebra
+
 # in this test will set the value of SphrScatLib as normal Sphere and check if the result is the same.
 ε_r2 = ε_r1 = .1 # the both hiemsperes have same material 
 l_max = 100 

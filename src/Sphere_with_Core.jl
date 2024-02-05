@@ -1,29 +1,34 @@
-
-function calculate_MSph_Core(radius_a, radius_b, ε_r1, l_max)
+#inside
+function calculate_ASph_with_Core(Amplitude, radius_a, radius_b, ε_r1, l_max)
     σ = I(l_max)
-    M_S = zeros(Float64, l_max, l_max)
-    
+    A_S = zeros(Float64, l_max)
+    M_S = zeros(Float64, l_max)
     for l in 0:l_max-1
-        for m in 0:l_max-1
-            term1 = (m+1) * ((radius_b^l) - ((radius_a^((2*l)+1))/(radius_b^(l+1))))
-            term2 = ε_r1 * ((l* (radius_b^l)) + ((l +1)*((radius_a^((2*l)+1))/(radius_b^(l+1)))))
-            M_S[l+1, m+1] = (2 / ((2*l) + 1)) * (term1 + term2) * σ[l+1, m+1]
+        for k in 0:l_max-1
+            A_S[k+1] = - Amplitude * (((2 * (k + 2))/ ((2*k) + 1) ) ) * radius_b * σ[2, k+1]
+            term1 = (l+1) * ((radius_b^l) - ((radius_a^((2*l)+1))/(radius_b^(l+1))))
+            term2 = ε_r1 * ((l* (radius_b^l)) + ((l + 1)*((radius_a^((2*l)+1))/(radius_b^(l+1)))))
+            M_S[l+1] = (2 / ((2*l) + 1)) * (term1 + term2) 
         end
     end
-    
-    return M_S
+
+    return A_S ./ M_S
 end
 
-function calculate_ASph_with_Core_test(Amplitude, radius_b, l_max)
+
+# Outside
+
+
+function calculate_ESph_with_Core(Amplitude, radius_b, ε_r1, l_max)
     σ = I(l_max)
-    A_S = zeros(Float64, l_max)  # Adjusted dimensions to be a row vector
-    for m in 0:l_max-1
-        A_S[m+1] = - Amplitude * (((2 * (m + 2))/ 3 ) ) * radius_b * σ[2, m+1]
+    E_S = zeros(Float64, l_max)
+    M_S_out = zeros(Float64, l_max)
+    
+    for l in 0:l_max-1
+        for k in 0:l_max-1
+            E_S[k+1] =  Amplitude * (ε_r1 - 1) * ( 2 /((2 * k) + 1)) * σ[2, k+1]
+            M_S_out[l+1] = (2 / ((2*l) + 1)) * ((l * ε_r1) + l + 1) * (radius_b^(-l-2)) 
+        end
     end
-    return A_S 
-end
-function calculate_ASph_with_Core(Amplitude, radius_a, radius_b, ε_r1, l_max)
-    A_S = calculate_ASph_with_Core_test(Amplitude, radius_b, l_max)
-    M_S = calculate_MSph_Core(radius_a, radius_b, ε_r1, l_max)
-    return A_S' / M_S
+    return E_S ./ M_S_out
 end
