@@ -4,7 +4,7 @@ include("compute_η.jl")
 include("compute_E_PEC.jl")
 
 
-function calculate_OH_E(Amplitude, radius_a, radius_b, ε_r1, ε_r2, l_max)  
+function calculate_OH_E(Amplitude,  radius_b, ε_r1, ε_r2, l_max)  
     η = calculate_η(l_max, ε_r1, ε_r2)
     U = generate_U_matrix(l_max)
     term2 = zeros(Float64, l_max, l_max)
