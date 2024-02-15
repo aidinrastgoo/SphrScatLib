@@ -9,6 +9,7 @@ include("Sphere.jl")
 include("compute_coefficient_upper_hemishpere.jl")
 include("compute_E_PEC.jl")
 include("Sphere_with_Core.jl")
+include("Double_hemisphere.jl")
 
 export calculate_η
 export generate_U_matrix
@@ -20,6 +21,9 @@ export compute_E_PEC
 export calculate_BSphere
 export calculate_ASph_with_Core
 export calculate_ESph_with_Core
+export calculate_B
+export calculate_C
+export calculate_D
 end # module SphrScatLib
 
 
