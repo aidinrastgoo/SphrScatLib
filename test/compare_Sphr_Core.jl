@@ -1,7 +1,7 @@
 
 # in this test will set the value of SphrScatLib as normal Sphere with a PEC-Core and check if the result is the same.
-ε_r1 = rand() # the both hiemsperes have same material 
-ε_r2 = ε_r1  #+ rand()
+ε_r1 = rand() 
+ε_r2 = ε_r1  ## the both hiemsperes have same material 
 l_max = 100
 radius_a = rand()
 radius_b = radius_a + 1.0 #this radius shall be bigger as radius_a
