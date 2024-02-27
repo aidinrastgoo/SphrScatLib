@@ -1,10 +1,10 @@
 # in this test will set the value of SphrScatLib as Double hemisphere without a PEC-Core and check if the result is the same.
-ε_r1 = 5 # the both hiemsperes have same material 
-ε_r2 = 3
-l_max = 4
+ε_r1 = rand() 
+ε_r2 = rand()
+l_max = 100
 radius_a = 0.0 #            ****there is no Metal-Sphere in the SphrScatLib****
 radius_b = radius_a + 1.0    #this radius shall be bigger as radius_a
-Amplitude =1.0 # rand() 
+Amplitude = rand() 
 A2 = calculate_LH_A2(Amplitude, radius_a, radius_b, ε_r1, ε_r2, l_max) # the coefficient for inside the SphrScatLib
 A1 = calculate_HH_A1(Amplitude, radius_a, radius_b, ε_r1, ε_r2, l_max)
 E = calculate_OH_E(Amplitude, radius_b, ε_r1, ε_r2, l_max)

@@ -38,16 +38,28 @@ point_cart = [OB_Die , OB_Out]
 sp = DielectricSphere(; radius= r_b, filling= medium_surrounding)
 # Compute the scalar potential at the observation point
 Φ = scatteredfield(sp, ex, ScalarPotential(point_cart))
-Amplitude = 1.0
 # the coefficient for inside and outside of Sphere with PEC_Core
 l_max = 100
-A_SC = calculate_LH_A2(Amplitude, r_a, r_b, ε_r1, ε_r2, l_max) # the coefficient for inside the SphrScatLib  or A_SC = calculate_ASph_with_Core(Amplitude, r_a, r_b, ε_r1, l_max)
-E_SC = calculate_OH_E(Amplitude, r_b, ε_r1, ε_r2, l_max) # the coefficient for outside the SphrScatLib  or E_SC =  calculate_ESph_with_Core(Amplitude, r_b, ε_r1, l_max)
+A_SC = calculate_LH_A2(amplitude, r_a, r_b, ε_r1, ε_r2, l_max) # the coefficient for inside the SphrScatLib  or A_SC = calculate_ASph_with_Core(Amplitude, r_a, r_b, ε_r1, l_max)
+E_SC = calculate_OH_E(amplitude, r_b, ε_r1, ε_r2, l_max) # the coefficient for outside the SphrScatLib  or E_SC =  calculate_ESph_with_Core(Amplitude, r_b, ε_r1, l_max)
 
-potential_in = A_SC[2] * r_in
+using SpecialFunctions  # For Legendre polynomials
+using LegendrePolynomials
+function calculate_Phi_2(amplitude, r, ra, xi, l_max)
+    Phi_2 = 0.0
+    Al = calculate_LH_A2(amplitude, ra, r, ε_r1, ε_r2, l_max)
+    for l in 0:l_max-1
+        term = Al[l+1] * (r^l - ra^(2l+1) * r^-(l+1)) * Pl(xi,l)
+        Phi_2 += term
+    end
+    return Phi_2
+end
+
+
+potential_in = calculate_Phi_2(amplitude, r_in, radius_a, 1 , l_max)
 potential_out = (E_SC[2] * r_out^(-2)) # - (amplitude * r_out)   
 
-#@test Φ[1]   ≈ potential_out
+#@test Φ[1]   ≈ potential_in
 @test Φ[2]   ≈ potential_out 
 
 
