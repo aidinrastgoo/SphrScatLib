@@ -1,5 +1,4 @@
-include("compute_U.jl")
-include("compute_η.jl")
+
 
 function calculate_LH_A2(Amplitude, radius_a, radius_b, ε_r1, ε_r2, l_max)  #lower Hiemspere
     η = calculate_η(l_max, ε_r1, ε_r2)

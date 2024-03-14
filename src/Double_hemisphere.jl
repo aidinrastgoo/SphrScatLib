@@ -1,5 +1,4 @@
-include("compute_U.jl")
-include("compute_η.jl")
+
 function calculate_B(Amplitude, radius, ε_r1, ε_r2,l_max)   #the coefficients of the potential outside the sphere ; radius = a
     U = generate_U_matrix(l_max)
     A = zeros(Float64, l_max)
