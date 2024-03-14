@@ -1,7 +1,4 @@
 using LinearAlgebra
-include("compute_U.jl")
-include("compute_η.jl")
-include("compute_E_PEC.jl")
 
 
 function calculate_OH_E(Amplitude,  radius_b, ε_r1, ε_r2, l_max)  

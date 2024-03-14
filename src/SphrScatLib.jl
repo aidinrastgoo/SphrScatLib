@@ -4,10 +4,10 @@ using LinearAlgebra
 include("compute_η.jl")
 include("compute_U.jl")
 include("compute_coefficient_lower_hemisphere.jl")
+include("compute_E_PEC.jl")
 include("compute_coefficient_out_of_hemisphere.jl")
 include("Sphere.jl")
 include("compute_coefficient_upper_hemishpere.jl")
-include("compute_E_PEC.jl")
 include("Sphere_with_Core.jl")
 include("Double_hemisphere.jl")
 

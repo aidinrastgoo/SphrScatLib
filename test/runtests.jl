@@ -6,7 +6,7 @@ using SphrScatLib
     
     include("compare_Sphr.jl")
     include("compare_Sphr_Core.jl")
-    include("SphericalScattering.jl")
     include("compare_Double_hemisphere.jl")
+    include("SphericalScattering.jl")
 
 end

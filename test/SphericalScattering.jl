@@ -1,6 +1,8 @@
 using SphericalScattering
 using StaticArrays
 using LinearAlgebra
+using SpecialFunctions  # For Legendre polynomials
+using LegendrePolynomials
 const μ0 = 4pi * 1e-7        # default permeability
 const ε0 = 8.8541878176e-12  # default permittivity
 # Define the direction of the incident electric field along the z-axis
@@ -25,8 +27,10 @@ medium_pec_core = Medium(0.0 , μ0)  # PEC has zero permittivity and unit permea
 r_in = r_b / 2 
 r_out =  r_b * 2
 
-OB_Die = SVector(0.0, 0.0, r_in )
-OB_Out = SVector(0.0, 0.0, r_out)
+θ = rand()
+
+OB_Die = SVector(0.0, r_in * sin(θ), r_in * cos(θ) )
+OB_Out = SVector(0.0, r_out * sin(θ), r_out * cos(θ))
 
 point_cart = [OB_Die , OB_Out] 
 
@@ -36,18 +40,16 @@ point_cart = [OB_Die , OB_Out]
 #sp = LayeredSphere(; radii=SVector(r_a, r_b), filling=SVector(medium_pec_core, medium_surrounding))
 #sp = PECSphere(r_a)
 sp = DielectricSphere(; radius= r_b, filling= medium_surrounding)
-# Compute the scalar potential at the observation point
-Φ = scatteredfield(sp, ex, ScalarPotential(point_cart))
+
 # the coefficient for inside and outside of Sphere with PEC_Core
 l_max = 100
 A_SC = calculate_LH_A2(amplitude, r_a, r_b, ε_r1, ε_r2, l_max) # the coefficient for inside the SphrScatLib  or A_SC = calculate_ASph_with_Core(Amplitude, r_a, r_b, ε_r1, l_max)
 E_SC = calculate_OH_E(amplitude, r_b, ε_r1, ε_r2, l_max) # the coefficient for outside the SphrScatLib  or E_SC =  calculate_ESph_with_Core(Amplitude, r_b, ε_r1, l_max)
 
-using SpecialFunctions  # For Legendre polynomials
-using LegendrePolynomials
-function calculate_Phi_2(amplitude, r, ra, xi, l_max)
+
+function calculate_Phi_2(amplitude, r, ra, rb, xi, l_max)
     Phi_2 = 0.0
-    Al = calculate_LH_A2(amplitude, ra, r, ε_r1, ε_r2, l_max)
+    Al = calculate_LH_A2(amplitude, ra, rb, ε_r1, ε_r2, l_max)
     for l in 0:l_max-1
         term = Al[l+1] * (r^l - ra^(2l+1) * r^-(l+1)) * Pl(xi,l)
         Phi_2 += term
@@ -55,11 +57,11 @@ function calculate_Phi_2(amplitude, r, ra, xi, l_max)
     return Phi_2
 end
 
-
-potential_in = calculate_Phi_2(amplitude, r_in, radius_a, 1 , l_max)
-potential_out = (E_SC[2] * r_out^(-2)) # - (amplitude * r_out)   
-
-#@test Φ[1]   ≈ potential_in
-@test Φ[2]   ≈ potential_out 
+# Compute the scalar potential at the observation point
+Φ = scatteredfield(sp, ex, ScalarPotential(point_cart))
+potential_in = calculate_Phi_2(amplitude, r_in, r_a, r_b, cos(θ) , l_max) 
+potential_out = ((E_SC[2] * r_out^(-2))  - (amplitude * r_out)) * cos(θ)  
+@test Φ[1]  - ((amplitude * r_in) * cos(θ))  ≈ potential_in
+@test Φ[2]  - ((amplitude * r_out) * cos(θ))  ≈ potential_out 
 
 
