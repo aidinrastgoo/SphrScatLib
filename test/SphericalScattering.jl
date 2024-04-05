@@ -47,20 +47,12 @@ A_SC = calculate_LH_A2(amplitude, r_a, r_b, ε_r1, ε_r2, l_max) # the coefficie
 E_SC = calculate_OH_E(amplitude, r_b, ε_r1, ε_r2, l_max) # the coefficient for outside the SphrScatLib  or E_SC =  calculate_ESph_with_Core(Amplitude, r_b, ε_r1, l_max)
 
 
-function calculate_Phi_2(amplitude, r, ra, rb, xi, l_max)
-    Phi_2 = 0.0
-    Al = calculate_LH_A2(amplitude, ra, rb, ε_r1, ε_r2, l_max)
-    for l in 0:l_max-1
-        term = Al[l+1] * (r^l - ra^(2l+1) * r^-(l+1)) * Pl(xi,l)
-        Phi_2 += term
-    end
-    return Phi_2
-end
+
 
 # Compute the scalar potential at the observation point
 Φ = scatteredfield(sp, ex, ScalarPotential(point_cart))
-potential_in = calculate_Phi_2(amplitude, r_in, r_a, r_b, cos(θ) , l_max) 
-potential_out = ((E_SC[2] * r_out^(-2))  - (amplitude * r_out)) * cos(θ)  
+potential_in = calculate_Phi_1(amplitude, r_in , r_a, r_b, cos(θ) , ε_r1, ε_r2, l_max) 
+potential_out = calculate_Phi_oe(amplitude, r_in , r_a, r_b, cos(θ) , ε_r1, ε_r2, l_max) 
 @test Φ[1]  - ((amplitude * r_in) * cos(θ))  ≈ potential_in
 @test Φ[2]  - ((amplitude * r_out) * cos(θ))  ≈ potential_out 
 
