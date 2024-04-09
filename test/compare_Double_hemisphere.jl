@@ -4,30 +4,40 @@
 l_max = 100
 radius_a = 0.0 #            ****there is no Metal-Sphere in the SphrScatLib****
 radius_b = radius_a + 1.0    #this radius shall be bigger as radius_a
-Amplitude = rand() 
-A2 = calculate_LH_A2(Amplitude, radius_a, radius_b, ε_r1, ε_r2, l_max)[:,1] # the coefficient for inside the SphrScatLib
-A1 = calculate_HH_A1(Amplitude, radius_a, radius_b, ε_r1, ε_r2, l_max)[:,1] 
-E = calculate_OH_E(Amplitude, radius_b, ε_r1, ε_r2, l_max)
+radius_out = radius_b + rand()
+Amplitude = 1.0 #rand() 
+ξ = rand()
 
-B = calculate_B(Amplitude, radius_b, ε_r1, ε_r2,l_max)   #the coefficients of the potential outside the sphere ; radius = a
-C = calculate_D(Amplitude, radius_b, ε_r1, ε_r2, l_max)   # the potential inside the double hemisphere
-D = calculate_C(Amplitude, radius_b, ε_r1, ε_r2, l_max)  
+A1 = calculate_HH_A1(Amplitude, radius_a, radius_b, ε_r1, ε_r2, l_max)[:,1] # the coefficient for region 1 of the SphrScatLib
+C = calculate_C(Amplitude, radius_b, ε_r1, ε_r2, l_max)  # the coefficient for the northern hemisphere
+A2 = calculate_LH_A2(Amplitude, radius_a, radius_b, ε_r1, ε_r2, l_max)[:,1] # the coefficient for region 2 of the SphrScatLib
+D = calculate_D(Amplitude, radius_b, ε_r1, ε_r2, l_max)   # the coefficient for the southern hemisphere
+
+
+Φ_B = Double_hemisphere_Phi_oe(Amplitude, radius_out , radius_b, ξ, ε_r1, ε_r2, l_max)    # the potential outside the double hemisphere
+Φ_E = calculate_Phi_oe(Amplitude, radius_out, radius_a , radius_b, ξ, ε_r1, ε_r2, l_max)  # the potential outside of the SphrScatLib
+
+
 
 
 @testset " Coefficient Comparison with Double hemisphere without PEC-Core" begin
-    @test isapprox(A1, D)
+    @test isapprox(A1, C)
     if !isapprox(A1, D)
         println("Tolerance exceeded for A1 and A_SC by: ", maximum(abs.(A1 - D)))
     end
-    
-    @test isapprox(E, B)
-    if !isapprox(E, B)
-        println("Tolerance exceeded for E and E_SC by: ", maximum(abs.(E - B)))
-    end
-    @test isapprox(A2, C)
+
+    @test isapprox(A2, D)
     if !isapprox(A2, C)
         println("Tolerance exceeded by: ", maximum(abs.(A2 - C)))
     end
 
+end
+
+@testset " Potential of Enviroment Comparison with Double hemisphere without PEC-Core" begin
+    
+    @test Φ_B  ≈ Φ_E
+    if !isapprox(Φ_B, Φ_E)
+        println("Tolerance exceeded Potential enviroment by: ", maximum(abs.(Φ_B - Φ_E)))
+    end
 end
 

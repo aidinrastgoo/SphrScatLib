@@ -8,8 +8,7 @@ Amplitude = 1.0
 A2 = calculate_LH_A2(Amplitude, radius_a, radius_b, ε_r1, ε_r2, l_max)[:,1] # the coefficient for inside the SphrScatLib
 A1 = calculate_HH_A1(Amplitude, radius_a, radius_b, ε_r1, ε_r2, l_max)[:,1]
 A_S = calculate_in(Amplitude, radius_b , ε_r1, l_max, l_max)' # the coefficient for inside the normal Sphere
-η = calculate_η(l_max, ε_r1, ε_r2)
-E = calculate_OH_E(Amplitude, radius_b, ε_r1, ε_r2, l_max) # the coefficient for outside the SphrScatLib
+E = calculate_HH_A1(Amplitude, radius_a, radius_b, ε_r1, ε_r2, l_max)[:,2]
 B = calculate_BSphere(Amplitude, radius_b , ε_r1, l_max, l_max)' # the coofficient for the outside the normal Sphere
 
 
