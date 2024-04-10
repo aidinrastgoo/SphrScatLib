@@ -28,7 +28,7 @@ function coefficients(Amplitude, radius_a, radius_b, ε_r1, ε_r2, l_max)  #lowe
                     
                     B[l_max+k+1] = Amplitude  * ( (k * η[k+1] * ε_r1) - η[k+1] + (k * ε_r2 * ((-1)^(k+1))) - ((-1)^(k+1)) ) * U[2 , k+1]
                     A[k+l_max+1 , l+(l_max)+1 ] =  ( (k * η[k+1] * ε_r1) + (η[k+1] * (l + 1)) + (k * ε_r2 * ((-1)^(l + k))) + ((l + 1) * ((-1)^(l + k))) ) * (radius_b^(-l-2)) * U[k+1, l+1]
-                    A[k+l_max+1, l+(2*l_max)+1] =   (((l+1) * η[k+1] * η[l+1] * ε_r1) + (k * η[k+1] * η[l+1] * ε_r1) + (k * ε_r2 * ((-1)^(l + k))) + ((l + 1) * ε_r2  * ((-1)^(l + k)) )) * (radius_b^(-l-2)) * U[k+1, l+1]
+                    A[k+l_max+1, l+(2*l_max)+1] =   -(((l+1) * η[k+1] * η[l+1] * ε_r1) + (k * η[k+1] * η[l+1] * ε_r1) + (k * ε_r2 * ((-1)^(l + k))) + ((l + 1) * ε_r2  * ((-1)^(l + k)) )) * (radius_b^(-l-2)) * U[k+1, l+1]
                                     
                     A[k+(2*l_max)+1, l+1]  = (radius_a^l) * ((η[l+1]) + ((-1)^(l+k)) ) * U[k+1, l+1]   
                     A[k+(2*l_max)+1, l+(2*l_max)+1] = (radius_a^(-l-1)) * ((η[l+1]) + ((-1)^(l+k)) ) * U[k+1, l+1]                                                                 #E_l (PEC)    r_a

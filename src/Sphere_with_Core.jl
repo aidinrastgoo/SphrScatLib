@@ -19,17 +19,8 @@ end
 # Outside
 
 
-function calculate_ESph_with_Core(Amplitude, radius_b, ε_r1, l_max)
-    σ = I(l_max)
-    E_S = zeros(Float64, l_max)
-    M_S_out = zeros(Float64, l_max, l_max)
+function Sph_with_Core_Phi_oe(Amplitude, r ,radius_a , radius_b, ξ, ε_r1)
     
-    for l in 0:l_max-1
-        for k in 0:l_max-1
-            E_S[k+1] =  Amplitude * (ε_r1 - 1) * ( 2 /((2 * k) + 1)) * σ[2, k+1]
-            M_S_out[l+1, k+1] = (2 / ((2*l) + 1)) * ((k * ε_r1) + k + 1) * (radius_b^(-k-2)) * σ[k+1, l+1]
-        end
-    end
-return inv(M_S_out) * E_S
-    #return E_S / M_S_out
+    E = (Amplitude/((ε_r1+2) * r^2)) * (    ((9 * ε_r1) / ( ( (2 /radius_a^3) - (2/radius_b^3) ) + ( ( ε_r1 / radius_a^3 ) + ((2 * ε_r1 )/ (radius_b^3) ) )  )  )   + (  (ε_r1 - 1)  * (radius_b^3 )  )     - ((ε_r1+2)r^3   )       )  * ξ
+    return E
 end
