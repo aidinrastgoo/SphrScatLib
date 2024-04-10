@@ -43,7 +43,7 @@ function calculate_Phi_oe(Amplitude, r ,ra, rb, ξ, ε_r1, ε_r2, l_max)
     for l in 0:l_max-1
     Phi_oe[l+1] =  ((E[l+1]  )  * Pl(ξ,l) ) / r^(l+1)  
     end
-    return sum(Phi_oe) - (Amplitude* r * ξ)
+    return sum(Phi_oe) - (Amplitude* ( r)  * Pl(ξ,1))
 end
 
 function Double_hemisphere_Phi_oe(Amplitude, r , radius_b, ξ, ε_r1, ε_r2, l_max)
