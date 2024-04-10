@@ -14,9 +14,9 @@ A1 = calculate_HH_A1(Amplitude, radius_a, radius_b, ε_r1, ε_r2, l_max)[:,1]
 
 
 A_SC = calculate_ASph_with_Core(Amplitude,radius_a, radius_b, ε_r1, l_max) # the coefficient for inside Sphere with PEC_Core
-Φ_SC = Sph_with_Core_Phi_oe(Amplitude, radius_out , radius_b, ξ, ε_r1, l_max)
+Φ_SC = Sph_with_Core_Phi_oe(Amplitude, radius_out ,radius_a , radius_b, ξ, ε_r1)
 
 
 @test isapprox(A1, A_SC)
 @test isapprox(A2, A_SC)
-#@test isapprox(Φ_SC, Φ_E, atol=tolerance)
+@test isapprox(Φ_SC, Φ_E)
