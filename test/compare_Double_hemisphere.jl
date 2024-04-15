@@ -22,22 +22,10 @@ D = calculate_D(Amplitude, radius_b, ε_r1, ε_r2, l_max)   # the coefficient fo
 
 @testset " Coefficient Comparison with Double hemisphere without PEC-Core" begin
     @test isapprox(A1, C)
-    if !isapprox(A1, D)
-        println("Tolerance exceeded for A1 and A_SC by: ", maximum(abs.(A1 - D)))
-    end
-
     @test isapprox(A2, D)
-    if !isapprox(A2, C)
-        println("Tolerance exceeded by: ", maximum(abs.(A2 - C)))
-    end
-
 end
 
 @testset " Potential of Enviroment Comparison with Double hemisphere without PEC-Core" begin
-    
     @test Φ_B  ≈ Φ_E
-    if !isapprox(Φ_B, Φ_E)
-        println("Tolerance exceeded Potential enviroment by: ", maximum(abs.(Φ_B - Φ_E)))
-    end
 end
 

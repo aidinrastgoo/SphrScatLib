@@ -32,6 +32,8 @@ export calculate_ESph_with_Core
 export calculate_B
 export calculate_C
 export calculate_D
+export calculate_EDL_A2
+export calculate_EDL_A1
 end # module SphrScatLib
 
 
