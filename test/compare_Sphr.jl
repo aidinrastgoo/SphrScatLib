@@ -14,18 +14,11 @@ E = calculate_HH_A1(Amplitude, radius_a, radius_b, ε_r1, ε_r2, l_max)[:,2] # t
 
 @testset " Coefficient Comparison with Normal Sphere" begin
     @test isapprox(A1, A_S)
-    if !isapprox(A1, A_S)
-        println("Tolerance exceeded for A1 and A_SC by: ", maximum(abs.(A1 - A_S)))
-    end
     
     @test isapprox(E, B)
-    if !isapprox(E, B)
-        println("Tolerance exceeded for E and E_SC by: ", maximum(abs.(E - B)))
-    end
+
     @test isapprox(A2, A_S)
-    if !isapprox(A2, A_S)
-        println("Tolerance exceeded by: ", maximum(abs.(A2 - A_S)))
-    end
+
 
 end
 
