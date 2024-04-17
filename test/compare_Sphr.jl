@@ -14,11 +14,7 @@ E = calculate_HH_A1(Amplitude, radius_a, radius_b, ε_r1, ε_r2, l_max)[:,2] # t
 
 @testset " Coefficient Comparison with Normal Sphere" begin
     @test isapprox(A1, A_S)
-    
     @test isapprox(E, B)
-
     @test isapprox(A2, A_S)
-
-
 end
 
