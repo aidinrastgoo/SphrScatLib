@@ -13,11 +13,11 @@ amplitude = norm(dir) # Amplitude of the incident electric field
 ex = UniformField(; direction=dir , amplitude)
 # Define the parameters
 r_b = 1.0 # Radius of the outer sphere take as refrence radius and has value of 1.0 p.u 
-r_a = round(rand(0.1:0.1:0.5), digits=1) #  # Radius of the PEC core is half of radius_a
-radius = rand(0.5:0.1:2)#(r_a + r_b )/2
+r_a = round(rand(0.1:0.1:0.5), digits=1)   # Radius of the PEC core
+radius = rand(0.5:0.1:2) #  Radius of the observation point
 θ_degrees = rand(0:90)
 θ = θ_degrees * π / 180
-l_max = 40 
+l_max = 100
 
 # Define the surrounding medium (outer PEC-Core )
 ε_r1 = rand(1:99)             # Relative permittivity of the surrounding medium (assuming free space) ε_r1 = ε_surrounding / ε0
