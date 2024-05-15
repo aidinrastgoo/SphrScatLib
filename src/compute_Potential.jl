@@ -46,31 +46,14 @@ function calculate_Phi_oe(Amplitude, r ,ra, rb, ξ, ε_r1, ε_r2, l_max)
     return sum(Phi_oe) - (Amplitude* ( r)  * Pl(ξ,1))
 end
 
-function Double_hemisphere_Phi_oe(Amplitude, r , radius_b, ξ, ε_r1, ε_r2, l_max)
-    Phi_oe = zeros(Float64, l_max)
-    E = calculate_B(Amplitude, radius_b, ε_r1, ε_r2,l_max)
-    for l in 0:l_max-1
-        Phi_oe[l+1] =  ((E[l+1] * r^(-l-1))  * Pl(ξ,l) )  
-    end
-    return sum(Phi_oe) - (Amplitude* r * ξ)
-end
 
-
-function Sph_with_Core_Phi_oeq(Amplitude, r ,radius_a , radius_b, ξ, ε_r1, l_max)
-    Phi_oe = zeros(Float64, l_max)
-    E = calculate_ESph_with_Core(Amplitude, radius_a ,radius_b, ε_r1, l_max)
-    for l in 0:l_max-1
-        Phi_oe[l+1] =  ((E[l+1] * r^(-l-1))  * Pl(ξ,l) )  
-    end
-    return sum(Phi_oe)# - (Amplitude* r * ξ)
-end
 
 
 function calculate_Phi(Amplitude, r, ra, rb, ξ, ε_r1, ε_r2, l_max)
     if r < ra
-        return  calculate_LH_A2(Amplitude, ra, rb, ε_r1, ε_r2, l_max)[1,4] # * 1.5 
+        return  calculate_LH_A2(Amplitude, ra, rb, ε_r1, ε_r2, l_max)[1,4] 
     elseif ra <= r < rb 
-        return  Phi_in(Amplitude, r , ra, rb, ξ, ε_r1, ε_r2, l_max) # * 1.5 
+        return  Phi_in(Amplitude, r , ra, rb, ξ, ε_r1, ε_r2, l_max) 
 
     elseif r >= rb
         return calculate_Phi_oe(Amplitude, r ,ra, rb, ξ, ε_r1, ε_r2, l_max)

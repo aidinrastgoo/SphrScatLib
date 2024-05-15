@@ -34,6 +34,7 @@ export calculate_C
 export calculate_D
 export calculate_EDL_A2
 export calculate_EDL_A1
+export Double_hemisphere_Phi
 end # module SphrScatLib
 
 
